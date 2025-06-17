@@ -121,14 +121,18 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           child: Column(
             children: [
               // Custom App Bar with glassmorphism
-              LiquidGlassContainer(
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(16.0),
-                  bottomRight: Radius.circular(16.0),
+              LiquidGlass(
+                blur: 8.0,
+                glassContainsChild: true,
+                settings: LiquidGlassSettings(
+                  thickness: 40,
+                  lightIntensity: 0.1,
+                  ambientStrength: 0,
+                  glassColor: Colors.white.withOpacity(0.1),
                 ),
-                blurStrengthX: 8.0,
-                blurStrengthY: 8.0,
-                color: Colors.white.withOpacity(0.1),
+                shape: LiquidRoundedSuperellipse(
+                  borderRadius: Radius.circular(16.0),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
@@ -161,11 +165,17 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               Expanded(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.all(24.0),
-                  child: LiquidGlassContainer(
-                    borderRadius: BorderRadius.circular(16.0),
-                    blurStrengthX: 8.0,
-                    blurStrengthY: 8.0,
-                    color: Colors.white.withOpacity(0.2),
+                  child: LiquidGlass(
+                    blur: 8.0,
+                    glassContainsChild: true,
+                    settings: LiquidGlassSettings(
+                      thickness: 40,
+                      lightIntensity: 0.1,
+                      ambientStrength: 0,
+                      glassColor: Colors.white.withOpacity(0.2),
+                    ),
+                    shape: LiquidRoundedSuperellipse(
+                        borderRadius: Radius.circular(16.0)),
                     child: Padding(
                       padding: const EdgeInsets.all(24.0),
                       child: Form(
@@ -204,11 +214,17 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             const SizedBox(height: 20),
 
                             // Category dropdown
-                            LiquidGlassContainer(
-                              borderRadius: BorderRadius.circular(12.0),
-                              blurStrengthX: 4.0,
-                              blurStrengthY: 4.0,
-                              color: Colors.white.withOpacity(0.1),
+                            LiquidGlass(
+                              blur: 4.0,
+                              glassContainsChild: true,
+                              settings: LiquidGlassSettings(
+                                thickness: 40,
+                                lightIntensity: 0.1,
+                                ambientStrength: 0,
+                                glassColor: Colors.white.withOpacity(0.1),
+                              ),
+                              shape: LiquidRoundedSuperellipse(
+                                  borderRadius: Radius.circular(12.0)),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 16.0),
@@ -239,11 +255,17 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             const SizedBox(height: 20),
 
                             // Daily task toggle
-                            LiquidGlassContainer(
-                              borderRadius: BorderRadius.circular(12.0),
-                              blurStrengthX: 4.0,
-                              blurStrengthY: 4.0,
-                              color: Colors.white.withOpacity(0.1),
+                            LiquidGlass(
+                              blur: 4.0,
+                              glassContainsChild: true,
+                              settings: LiquidGlassSettings(
+                                thickness: 40,
+                                lightIntensity: 0.1,
+                                ambientStrength: 0,
+                                glassColor: Colors.white.withOpacity(0.1),
+                              ),
+                              shape: LiquidRoundedSuperellipse(
+                                  borderRadius: Radius.circular(12.0)),
                               child: Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: Row(

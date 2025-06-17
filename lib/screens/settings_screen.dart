@@ -136,35 +136,45 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-      child: LiquidGlassContainer(
-        borderRadius: BorderRadius.circular(12.0),
-        blurStrengthX: 6.0,
-        blurStrengthY: 6.0,
-        color: Colors.white.withOpacity(0.1),
-        child: ListTile(
-          leading: Icon(
-            icon,
-            color: iconColor ?? AppTheme.mediumDarkGreenStreak,
-          ),
-          title: Text(
-            title,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: AppTheme.primaryTextColor,
-                  fontWeight: FontWeight.w500,
-                ),
-          ),
-          subtitle: subtitle != null
-              ? Text(
-                  subtitle,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppTheme.secondaryTextColor,
-                      ),
-                )
-              : null,
-          trailing: trailing,
-          onTap: onTap,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+      child: LiquidGlass(
+        blur: 6.0,
+        glassContainsChild: true,
+        settings: LiquidGlassSettings(
+          thickness: 40,
+          lightIntensity: 0.1,
+          ambientStrength: 0,
+          glassColor: Colors.white.withOpacity(0.1),
+        ),
+        shape: LiquidRoundedSuperellipse(
+            borderRadius:
+                Radius.circular(12.0)), // Changed from LiquidGlassSquircle
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: ListTile(
+            leading: Icon(
+              icon,
+              color: iconColor ?? AppTheme.mediumDarkGreenStreak,
+            ),
+            title: Text(
+              title,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: AppTheme.primaryTextColor,
+                    fontWeight: FontWeight.w500,
+                  ),
+            ),
+            subtitle: subtitle != null
+                ? Text(
+                    subtitle,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: AppTheme.secondaryTextColor,
+                        ),
+                  )
+                : null,
+            trailing: trailing,
+            onTap: onTap,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
           ),
         ),
       ),
@@ -190,14 +200,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Column(
             children: [
               // Custom App Bar with glassmorphism
-              LiquidGlassContainer(
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(16.0),
-                  bottomRight: Radius.circular(16.0),
+              LiquidGlass(
+                blur: 8.0,
+                glassContainsChild: true,
+                settings: LiquidGlassSettings(
+                  thickness: 40,
+                  lightIntensity: 0.1,
+                  ambientStrength: 0,
+                  glassColor: Colors.white.withOpacity(0.1),
                 ),
-                blurStrengthX: 8.0,
-                blurStrengthY: 8.0,
-                color: Colors.white.withOpacity(0.1),
+                shape: LiquidRoundedSuperellipse(
+                  borderRadius: Radius.circular(16.0),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
@@ -240,11 +254,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           return Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: LiquidGlassContainer(
-                              borderRadius: BorderRadius.circular(16.0),
-                              blurStrengthX: 8.0,
-                              blurStrengthY: 8.0,
-                              color: Colors.white.withOpacity(0.15),
+                            child: LiquidGlass(
+                              blur: 8.0,
+                              glassContainsChild: true,
+                              settings: LiquidGlassSettings(
+                                thickness: 40,
+                                lightIntensity: 0.1,
+                                ambientStrength: 0,
+                                glassColor: Colors.white.withOpacity(0.15),
+                              ),
+                              shape: LiquidRoundedSuperellipse(
+                                  // Changed from LiquidGlassSquircle
+                                  borderRadius: Radius.circular(
+                                      16.0)), // Changed from BorderRadius
                               child: Padding(
                                 padding: const EdgeInsets.all(20.0),
                                 child: Row(

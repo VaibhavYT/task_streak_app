@@ -95,11 +95,18 @@ class _StreakCalendarGridState extends State<StreakCalendarGrid> {
 
   @override
   Widget build(BuildContext context) {
-    return LiquidGlassContainer(
-      borderRadius: BorderRadius.circular(16.0),
-      blurStrengthX: 8.0,
-      blurStrengthY: 8.0,
-      color: Colors.white.withOpacity(0.15),
+    return LiquidGlass(
+      blur: 8.0,
+      glassContainsChild: true,
+      settings: LiquidGlassSettings(
+        thickness: 40,
+        lightIntensity: 0.1,
+        ambientStrength: 0,
+        glassColor: Colors.white.withOpacity(0.15),
+      ),
+      shape: LiquidRoundedSuperellipse(
+          borderRadius:
+              Radius.circular(16.0)), // Changed from LiquidGlassSquircle
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -149,7 +156,6 @@ class _StreakCalendarGridState extends State<StreakCalendarGrid> {
                 holidayDecoration: const BoxDecoration(),
                 rangeStartDecoration: const BoxDecoration(),
                 rangeEndDecoration: const BoxDecoration(),
-                rangeHighlightDecoration: const BoxDecoration(),
                 withinRangeDecoration: const BoxDecoration(),
               ),
 

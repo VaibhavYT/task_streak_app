@@ -24,7 +24,11 @@ class AuthProvider extends ChangeNotifier {
 
     // Listen to auth state changes
     _authSubscription = _supabase.auth.onAuthStateChange.listen(
-      _onAuthStateChange,
+      (AuthState state) {
+        final event = state.event;
+        final session = state.session;
+        _onAuthStateChange(event, session);
+      },
     );
   }
 

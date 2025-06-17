@@ -48,7 +48,7 @@ class AppTheme {
       ),
 
       // Card theme with rounded corners
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),

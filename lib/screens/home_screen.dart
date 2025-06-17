@@ -50,11 +50,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildEmptyTasksState(String title, String message, IconData icon) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: LiquidGlassContainer(
-        borderRadius: BorderRadius.circular(16.0),
-        blurStrengthX: 8.0,
-        blurStrengthY: 8.0,
-        color: Colors.white.withOpacity(0.1),
+      child: LiquidGlass(
+        blur: 8.0,
+        glassContainsChild: true,
+        settings: LiquidGlassSettings(
+          thickness: 40,
+          lightIntensity: 0.1,
+          ambientStrength: 0,
+          glassColor: Colors.white.withOpacity(0.1),
+        ),
+        shape: LiquidRoundedSuperellipse(
+            borderRadius:
+                Radius.circular(16.0)), // Changed from LiquidGlassSquircle
         child: Padding(
           padding: const EdgeInsets.all(32.0),
           child: Column(
@@ -68,17 +75,17 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 title,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: AppTheme.primaryTextColor,
-                  fontWeight: FontWeight.w600,
-                ),
+                      color: AppTheme.primaryTextColor,
+                      fontWeight: FontWeight.w600,
+                    ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
               Text(
                 message,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppTheme.secondaryTextColor,
-                ),
+                      color: AppTheme.secondaryTextColor,
+                    ),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -96,14 +103,15 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(AppTheme.mediumDarkGreenStreak),
+                valueColor: AlwaysStoppedAnimation<Color>(
+                    AppTheme.mediumDarkGreenStreak),
               ),
               const SizedBox(height: 16),
               Text(
                 'Loading your tasks...',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppTheme.secondaryTextColor,
-                ),
+                      color: AppTheme.secondaryTextColor,
+                    ),
               ),
             ],
           ),
@@ -133,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
               final todayCompletedCount = _getTodayCompletedCount();
               final categories = ['Fitness', 'Health', 'Learning', 'Work'];
               final streakInfo = taskProvider.getStreakInfo();
-              
+
               return RefreshIndicator(
                 onRefresh: _refreshTasks,
                 child: CustomScrollView(
@@ -160,45 +168,61 @@ class _HomeScreenState extends State<HomeScreen> {
                                             .textTheme
                                             .headlineMedium
                                             ?.copyWith(
-                                              color: AppTheme.veryDarkGreenStreak,
+                                              color:
+                                                  AppTheme.veryDarkGreenStreak,
                                               fontWeight: FontWeight.bold,
                                             ),
                                       ),
                                       const SizedBox(width: 12),
                                       // Streak badge
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 8,
-                                          vertical: 4,
+                                      LiquidGlass(
+                                        blur: 8.0,
+                                        glassContainsChild: true,
+                                        settings: LiquidGlassSettings(
+                                          thickness: 40,
+                                          lightIntensity: 0.1,
+                                          ambientStrength: 0,
+                                          glassColor:
+                                              Colors.white.withOpacity(0.1),
                                         ),
-                                        decoration: BoxDecoration(
-                                          color: streakInfo['currentStreak'] > 0
-                                              ? AppTheme.mediumDarkGreenStreak
-                                              : AppTheme.secondaryTextColor.withOpacity(0.3),
-                                          borderRadius: BorderRadius.circular(12),
-                                        ),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Icon(
-                                              Icons.local_fire_department,
-                                              size: 16,
-                                              color: streakInfo['currentStreak'] > 0
-                                                  ? Colors.white
-                                                  : AppTheme.secondaryTextColor,
-                                            ),
-                                            const SizedBox(width: 4),
-                                            Text(
-                                              '${streakInfo['currentStreak']}',
-                                              style: TextStyle(
-                                                color: streakInfo['currentStreak'] > 0
+                                        shape: LiquidRoundedSuperellipse(
+                                            // Changed from LiquidGlassSquircle
+                                            borderRadius: Radius.circular(
+                                                12)), // Changed from BorderRadius
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 8,
+                                            vertical: 4,
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(
+                                                Icons.local_fire_department,
+                                                size: 16,
+                                                color: streakInfo[
+                                                            'currentStreak'] >
+                                                        0
                                                     ? Colors.white
-                                                    : AppTheme.secondaryTextColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12,
+                                                    : AppTheme
+                                                        .secondaryTextColor,
                                               ),
-                                            ),
-                                          ],
+                                              const SizedBox(width: 4),
+                                              Text(
+                                                '${streakInfo['currentStreak']}',
+                                                style: TextStyle(
+                                                  color: streakInfo[
+                                                              'currentStreak'] >
+                                                          0
+                                                      ? Colors.white
+                                                      : AppTheme
+                                                          .secondaryTextColor,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -220,7 +244,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               onPressed: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) => const SettingsScreen(),
+                                    builder: (context) =>
+                                        const SettingsScreen(),
                                   ),
                                 );
                               },
@@ -238,11 +263,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: LiquidGlassContainer(
-                          borderRadius: BorderRadius.circular(16.0),
-                          blurStrengthX: 10.0,
-                          blurStrengthY: 10.0,
-                          color: Colors.white.withOpacity(0.15),
+                        child: LiquidGlass(
+                          blur: 10.0,
+                          glassContainsChild: true,
+                          settings: LiquidGlassSettings(
+                            thickness: 40,
+                            lightIntensity: 0.1,
+                            ambientStrength: 0,
+                            glassColor: Colors.white.withOpacity(0.1),
+                          ),
+                          shape: LiquidRoundedSuperellipse(
+                            // Changed from LiquidGlassSquircle
+                            borderRadius: Radius.circular(
+                                16.0), // Changed from BorderRadius
+                          ),
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Column(
@@ -259,7 +293,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const SizedBox(height: 8),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.baseline,
                                   textBaseline: TextBaseline.alphabetic,
                                   children: [
                                     Text(
@@ -268,7 +303,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .textTheme
                                           .headlineLarge
                                           ?.copyWith(
-                                            color: AppTheme.mediumDarkGreenStreak,
+                                            color:
+                                                AppTheme.mediumDarkGreenStreak,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 48,
                                           ),
@@ -284,7 +320,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 ),
                                 Text(
-                                  streakInfo['currentStreak'] == 1 ? 'day' : 'days',
+                                  streakInfo['currentStreak'] == 1
+                                      ? 'day'
+                                      : 'days',
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge
@@ -304,7 +342,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
-                                if (streakInfo['longestStreak'] > streakInfo['currentStreak']) ...[
+                                if (streakInfo['longestStreak'] >
+                                    streakInfo['currentStreak']) ...[
                                   const SizedBox(height: 8),
                                   Text(
                                     'Personal best: ${streakInfo['longestStreak']} days',
@@ -331,42 +370,62 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: taskProvider.dailyCompletionsCount.isEmpty
-                            ? LiquidGlassContainer(
-                                borderRadius: BorderRadius.circular(16.0),
-                                blurStrengthX: 8.0,
-                                blurStrengthY: 8.0,
-                                color: Colors.white.withOpacity(0.15),
+                            ? LiquidGlass(
+                                blur: 8.0,
+                                glassContainsChild: true,
+                                settings: LiquidGlassSettings(
+                                  thickness: 40,
+                                  lightIntensity: 0.1,
+                                  ambientStrength: 0,
+                                  glassColor: Colors.white.withOpacity(0.1),
+                                ),
+                                shape: LiquidRoundedSuperellipse(
+                                    // Changed from LiquidGlassSquircle
+                                    borderRadius: Radius.circular(
+                                        16.0)), // Changed from BorderRadius
                                 child: Padding(
                                   padding: const EdgeInsets.all(24.0),
                                   child: Column(
                                     children: [
                                       Text(
                                         'Streak Calendar',
-                                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                          color: AppTheme.veryDarkGreenStreak,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge
+                                            ?.copyWith(
+                                              color:
+                                                  AppTheme.veryDarkGreenStreak,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                       ),
                                       const SizedBox(height: 16),
                                       Icon(
                                         Icons.calendar_month_outlined,
                                         size: 48,
-                                        color: AppTheme.secondaryTextColor.withOpacity(0.5),
+                                        color: AppTheme.secondaryTextColor
+                                            .withOpacity(0.5),
                                       ),
                                       const SizedBox(height: 12),
                                       Text(
                                         'No completions yet',
-                                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                          color: AppTheme.primaryTextColor,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: AppTheme.primaryTextColor,
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                       ),
                                       const SizedBox(height: 4),
                                       Text(
                                         'Complete tasks to see your streak calendar',
-                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                          color: AppTheme.secondaryTextColor,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              color:
+                                                  AppTheme.secondaryTextColor,
+                                            ),
                                         textAlign: TextAlign.center,
                                       ),
                                     ],
@@ -374,7 +433,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               )
                             : StreakCalendarGrid(
-                                dailyCompletionsCount: taskProvider.dailyCompletionsCount,
+                                dailyCompletionsCount:
+                                    taskProvider.dailyCompletionsCount,
                               ),
                       ),
                     ),
@@ -382,8 +442,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SliverToBoxAdapter(child: SizedBox(height: 24)),
 
                     // Loading indicator
-                    if (taskProvider.isLoading)
-                      _buildLoadingState(),
+                    if (taskProvider.isLoading) _buildLoadingState(),
 
                     // Tasks by category
                     if (!taskProvider.isLoading) ...[
@@ -400,7 +459,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         // Daily tasks section
                         SliverToBoxAdapter(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Text(
                               'Daily Tasks',
                               style: Theme.of(context)
@@ -414,7 +474,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         const SliverToBoxAdapter(child: SizedBox(height: 12)),
-                        
+
                         // Daily tasks list
                         SliverList(
                           delegate: SliverChildBuilderDelegate(
@@ -422,7 +482,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               final dailyTasks = taskProvider.tasks
                                   .where((task) => task.isDaily)
                                   .toList();
-                              
+
                               if (dailyTasks.isEmpty) {
                                 return _buildEmptyTasksState(
                                   'No daily tasks yet',
@@ -430,36 +490,45 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Icons.repeat,
                                 );
                               }
-                              
+
                               final task = dailyTasks[index];
-                              
+
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 16.0,
                                   vertical: 4.0,
                                 ),
                                 child: FutureBuilder<bool>(
-                                  future: taskProvider.isTaskCompletedToday(task.id),
+                                  future: taskProvider
+                                      .isTaskCompletedToday(task.id),
                                   builder: (context, snapshot) {
                                     final isCompleted = snapshot.data ?? false;
-                                    
+
                                     return TaskCard(
                                       task: task,
                                       isCompleted: isCompleted,
                                       onMarkComplete: () async {
                                         try {
-                                          await taskProvider.markTaskComplete(task.id);
-                                          setState(() {}); // Refresh to update counts
+                                          await taskProvider
+                                              .markTaskComplete(task.id);
+                                          setState(
+                                              () {}); // Refresh to update counts
                                         } catch (e) {
                                           if (mounted) {
-                                            ScaffoldMessenger.of(context).showSnackBar(
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
                                               SnackBar(
-                                                content: Text('Task already completed today'),
-                                                backgroundColor: AppTheme.mediumDarkGreenStreak,
-                                                behavior: SnackBarBehavior.floating,
-                                                margin: const EdgeInsets.all(16),
+                                                content: Text(
+                                                    'Task already completed today'),
+                                                backgroundColor: AppTheme
+                                                    .mediumDarkGreenStreak,
+                                                behavior:
+                                                    SnackBarBehavior.floating,
+                                                margin:
+                                                    const EdgeInsets.all(16),
                                                 shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(12),
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
                                                 ),
                                               ),
                                             );
@@ -472,10 +541,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               );
                             },
                             childCount: taskProvider.tasks
-                                .where((task) => task.isDaily)
-                                .isEmpty ? 1 : taskProvider.tasks
-                                .where((task) => task.isDaily)
-                                .length,
+                                    .where((task) => task.isDaily)
+                                    .isEmpty
+                                ? 1
+                                : taskProvider.tasks
+                                    .where((task) => task.isDaily)
+                                    .length,
                           ),
                         ),
 
@@ -484,17 +555,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         // Category sections
                         ...categories.map((category) {
                           final categoryTasks = _getTasksByCategory(
-                            taskProvider.tasks.where((task) => !task.isDaily).toList(),
+                            taskProvider.tasks
+                                .where((task) => !task.isDaily)
+                                .toList(),
                             category,
                           );
-                          
-                          if (categoryTasks.isEmpty) return const SliverToBoxAdapter();
-                          
+
+                          if (categoryTasks.isEmpty)
+                            return const SliverToBoxAdapter();
+
                           return SliverList(
                             delegate: SliverChildListDelegate([
                               // Category header
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
                                 child: Text(
                                   category,
                                   style: Theme.of(context)
@@ -507,45 +582,58 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               const SizedBox(height: 12),
-                              
+
                               // Category tasks
                               ...categoryTasks.map((task) => Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16.0,
-                                  vertical: 4.0,
-                                ),
-                                child: FutureBuilder<bool>(
-                                  future: taskProvider.isTaskCompletedToday(task.id),
-                                  builder: (context, snapshot) {
-                                    final isCompleted = snapshot.data ?? false;
-                                    
-                                    return TaskCard(
-                                      task: task,
-                                      isCompleted: isCompleted,
-                                      onMarkComplete: () async {
-                                        try {
-                                          await taskProvider.markTaskComplete(task.id);
-                                          setState(() {}); // Refresh to update counts
-                                        } catch (e) {
-                                          if (mounted) {
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(
-                                                content: Text('Failed to mark task complete'),
-                                                backgroundColor: Colors.red.shade600,
-                                                behavior: SnackBarBehavior.floating,
-                                                margin: const EdgeInsets.all(16),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(12),
-                                                ),
-                                              ),
-                                            );
-                                          }
-                                        }
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0,
+                                      vertical: 4.0,
+                                    ),
+                                    child: FutureBuilder<bool>(
+                                      future: taskProvider
+                                          .isTaskCompletedToday(task.id),
+                                      builder: (context, snapshot) {
+                                        final isCompleted =
+                                            snapshot.data ?? false;
+
+                                        return TaskCard(
+                                          task: task,
+                                          isCompleted: isCompleted,
+                                          onMarkComplete: () async {
+                                            try {
+                                              await taskProvider
+                                                  .markTaskComplete(task.id);
+                                              setState(
+                                                  () {}); // Refresh to update counts
+                                            } catch (e) {
+                                              if (mounted) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                        'Failed to mark task complete'),
+                                                    backgroundColor:
+                                                        Colors.red.shade600,
+                                                    behavior: SnackBarBehavior
+                                                        .floating,
+                                                    margin:
+                                                        const EdgeInsets.all(
+                                                            16),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                            }
+                                          },
+                                        );
                                       },
-                                    );
-                                  },
-                                ),
-                              )),
+                                    ),
+                                  )),
                               const SizedBox(height: 16),
                             ]),
                           );
@@ -556,40 +644,49 @@ class _HomeScreenState extends State<HomeScreen> {
                           delegate: SliverChildListDelegate([
                             const SizedBox(height: 8),
                             ..._getTasksByCategory(
-                              taskProvider.tasks.where((task) => !task.isDaily).toList(),
+                              taskProvider.tasks
+                                  .where((task) => !task.isDaily)
+                                  .toList(),
                               null,
                             ).map((task) => Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16.0,
-                                vertical: 4.0,
-                              ),
-                              child: FutureBuilder<bool>(
-                                future: taskProvider.isTaskCompletedToday(task.id),
-                                builder: (context, snapshot) {
-                                  final isCompleted = snapshot.data ?? false;
-                                  
-                                  return TaskCard(
-                                    task: task,
-                                    isCompleted: isCompleted,
-                                    onMarkComplete: () async {
-                                      try {
-                                        await taskProvider.markTaskComplete(task.id);
-                                        setState(() {}); // Refresh to update counts
-                                      } catch (e) {
-                                        if (mounted) {
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            SnackBar(
-                                              content: Text('Task already completed today'),
-                                              backgroundColor: AppTheme.mediumDarkGreenStreak,
-                                            ),
-                                          );
-                                        }
-                                      }
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                    vertical: 4.0,
+                                  ),
+                                  child: FutureBuilder<bool>(
+                                    future: taskProvider
+                                        .isTaskCompletedToday(task.id),
+                                    builder: (context, snapshot) {
+                                      final isCompleted =
+                                          snapshot.data ?? false;
+
+                                      return TaskCard(
+                                        task: task,
+                                        isCompleted: isCompleted,
+                                        onMarkComplete: () async {
+                                          try {
+                                            await taskProvider
+                                                .markTaskComplete(task.id);
+                                            setState(
+                                                () {}); // Refresh to update counts
+                                          } catch (e) {
+                                            if (mounted) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                      'Task already completed today'),
+                                                  backgroundColor: AppTheme
+                                                      .mediumDarkGreenStreak,
+                                                ),
+                                              );
+                                            }
+                                          }
+                                        },
+                                      );
                                     },
-                                  );
-                                },
-                              ),
-                            )),
+                                  ),
+                                )),
                           ]),
                         ),
                       ],
@@ -597,7 +694,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     const SliverToBoxAdapter(child: SizedBox(height: 100)),
                   ],
-                );
+                ),
+              );
             },
           ),
         ),
